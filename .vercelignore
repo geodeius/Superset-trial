@@ -1,0 +1,10 @@
+.git
+.venv
+.local
+node_modules
+preview
+scripts
+superset
+requirements*.txt
+*.log
+.env*

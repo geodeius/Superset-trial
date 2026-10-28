@@ -1,0 +1,4 @@
+apache-superset==6.0.0
+marshmallow==3.26.2
+rich==13.9.4
+flask-appbuilder==5.0.0
