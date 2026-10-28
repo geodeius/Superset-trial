@@ -8,7 +8,8 @@
     "build": "vite build",
     "test": "node --test server/*.test.mjs",
     "setup": "node scripts/setup.mjs",
-    "superset": "node scripts/run-superset.mjs"
+    "superset": "node scripts/run-superset.mjs",
+    "preview:hosted": "node scripts/preview-hosted.mjs"
   },
   "dependencies": {
     "@superset-ui/embedded-sdk": "^0.3.0",

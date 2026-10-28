@@ -1,6 +1,7 @@
 import { clients } from '../server/clients.mjs';
+import { demoPage } from '../shared/demo-data.mjs';
 
-const readRoutes = new Set(['session', 'sync/status', 'dashboard']);
+const readRoutes = new Set(['session', 'sync/status', 'dashboard', 'demo/orders']);
 const writeRoutes = new Set(['client', 'sync', 'source/simulate', 'guest-token']);
 export function backendUrl(value) {
   if (!value) return null;
@@ -19,6 +20,10 @@ export default async function handler(req, res) {
     let requestHost;
     try { requestHost = new URL(origin).host; } catch { return res.status(403).json({ error: 'Request origin is not allowed.' }); }
     if (requestHost !== req.headers.host) return res.status(403).json({ error: 'Request origin is not allowed.' });
+  }
+  if (route === 'demo/orders') {
+    try { return res.json(demoPage(String(req.query?.client_id || 'atelier'), Number(req.query?.page || 1), Number(req.query?.page_size || 250))); }
+    catch (error) { return res.status(400).json({ error: error.message }); }
   }
   let backend;
   try { backend = backendUrl(process.env.FOLIO_BACKEND_URL); }
