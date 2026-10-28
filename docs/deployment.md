@@ -2,7 +2,7 @@
 
 ## What runs on Vercel
 
-Vercel serves the React portal and the allowlisted `/api/*` proxy. Without a backend URL, it provides fictional workspace navigation and a clear connection setup screen. It does **not** pretend that dashboards, source mutations, syncs, or hourly jobs are running.
+Vercel serves the React portal and the allowlisted `/api/*` proxy. Without a backend URL, it provides an interactive sample dashboard rendered by React and SVG, plus a real public paginated fixture endpoint at `/api/demo/orders`. These charts are explicitly labeled as a sample dashboard rather than embedded Superset. Browser-local sample orders can be added and imported on refresh; the shared public fixture stays unchanged. Hourly refresh in this mode requires the page to remain open. The side panel supports inspecting the JSON and saving an endpoint draft, but does not connect to arbitrary authenticated APIs. Real Superset dashboards and server-side sync still require the separate backend.
 
 Superset, its metadata/reporting databases, and the ingestion worker run on a separate persistent server. The local SQLite demo and in-memory sessions are not intended for real client data or multiple backend replicas.
 

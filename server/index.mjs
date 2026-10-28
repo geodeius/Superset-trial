@@ -6,6 +6,7 @@ import { createServer as createViteServer } from 'vite';
 import { readFile } from 'node:fs/promises';
 import { timingSafeEqual, randomBytes } from 'node:crypto';
 import { clients, guestPayload } from './clients.mjs';
+import { demoPage } from '../shared/demo-data.mjs';
 
 const app = express();
 const port = Number(process.env.PORT || 3017);
@@ -35,6 +36,10 @@ app.use('/api', (req, res, next) => {
   }
   if (req.method !== 'GET' && req.headers.origin !== origin) return res.status(403).json({ error: 'Request origin is not allowed.' });
   next();
+});
+app.get('/api/demo/orders', (req, res) => {
+  try { res.json(demoPage(String(req.query.client_id || 'atelier'), Number(req.query.page || 1), Number(req.query.page_size || 250))); }
+  catch(error) { res.status(400).json({ error: error.message }); }
 });
 app.get('/api/session', (req, res) => {
   const cookie = req.headers.cookie?.match(/(?:^|; )folio_session=([a-f0-9]+)/)?.[1];

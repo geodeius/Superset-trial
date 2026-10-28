@@ -4,7 +4,7 @@ A working local prototype of a branded client portal with **real Apache Superset
 
 ## Hosted portal
 
-The Vercel deployment serves the portal and a server-side backend proxy. Until a public backend is configured, it displays a connection setup screen; embedded analytics and hourly sync remain available only in the running local demo. See [deployment instructions](docs/deployment.md) for configuration. No local credentials or databases are included in the deployment.
+The Vercel deployment serves the portal and a server-side backend proxy. Without a public backend, it displays an interactive fictional-data dashboard rendered by the portal, with period/channel filters, CSV export, and an API connection panel. The public `/api/demo/orders` endpoint serves the same paginated fixture. Sample-order additions are browser-local overlays, not changes to that public fixture; refresh combines the API fixture with those overlays. Demo hourly refresh runs only while the page is open. Real Superset embedding and server-side hourly ingestion require a connected backend. See [deployment instructions](docs/deployment.md) for configuration. No local credentials or databases are included in the deployment.
 
 ## Try it
 
@@ -106,3 +106,9 @@ To demonstrate the complete process:
 The top-level **Sync now** button performs the same ingestion and reloads the embedded dashboard. The display shows actual data-sync time rather than the time the dashboard was opened. Simulation dates are fixed in October 2026 to match the sample dashboard filters.
 
 The dummy API is intentionally public only within this localhost prototype and contains fictional data. Source mutations and sync requests use the existing local session and CSRF checks; the server derives the client from the session. Replacing the adapter with a real API should retain server-only credentials, explicit client mapping, pagination and validation, and add the real source's deletion/update semantics and rate limits. Do not run `npm run setup` to refresh API data: setup resets reporting data; use **Sync now** instead.
+
+## Hosted sample dashboard
+
+Open the live portal to explore sample revenue, orders, customers, daily sales, channel mix, and product performance. The API connection panel sits beside the dashboard on desktop and below it on mobile. Use **Add sample order**, then **Refresh data**, to simulate importing an extra $250 October order in this browser. The **Your API** tab saves a non-secret endpoint draft locally; it does not claim to connect to or call that endpoint.
+
+To preview hosted mode locally: run `npm run build`, then `npm run preview:hosted` and open http://localhost:3019. This mode uses demo charts, not the Superset iframe. The existing local server at port 3017 still embeds real Superset.
